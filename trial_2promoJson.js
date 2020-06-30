@@ -18,11 +18,11 @@ request('https://www.bankmega.com/promolainnya.php', (error, response, body) => 
     }
     // console.log(promo)
 
+    // ====================== Subcat No 1: Travel ======================
     var subcatno = 1
     request(`https://www.bankmega.com/promolainnya.php?product=0&subcat=${subcatno}&page=1`, (error, response, body) => {
         const $ = cheerio.load(body)
         page = $('.tablepaging').find('tr').contents().length - 4
-        
         var data = {}
         for (p=1; p<=page; p++){
             request(`https://www.bankmega.com/promolainnya.php?product=0&subcat=${subcatno}&page=${p}`, (error, response, body) => {
@@ -38,8 +38,8 @@ request('https://www.bankmega.com/promolainnya.php', (error, response, body) => 
                     }
                     promo[subcat[subcatno-1]].push(data)
                 }
-                console.log(promo['Travel'])
-                console.log(promo['Travel'].length)
+                // console.log(promo['Travel'])
+                // console.log(promo['Travel'].length)
                 data = JSON.stringify(promo);
                 fs.writeFile('trial_2result.json', data, (err) => {
                     if (err) throw err;
@@ -47,6 +47,6 @@ request('https://www.bankmega.com/promolainnya.php', (error, response, body) => 
                 });
             })
         }
-
-    })    
+    })
+    
 })
